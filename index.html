@@ -62,6 +62,7 @@
         function addPoint(location) {
             var parkPlace = L.marker(location, {icon: greenIcon}).addTo(mymap);
         }
+        var popup = L.popup();
 
         function updateView() {
             clearTimeout(updateTimeout);
@@ -73,8 +74,12 @@
                     data.forEach(function(viecle) {
                         var marker = L.marker([viecle.latitude, viecle.longitude]).addTo(mymap);
                         mapObjects.push(marker);
-                        marker.on('click', function() {
+                        marker.on('click', function(e) {
                             console.log(viecle);
+                            popup
+                                .setLatLng(e.latlng)
+                                .setContent(JSON.stringify(viecle))
+                                .openOn(mymap);
                         });
                     });
                 });

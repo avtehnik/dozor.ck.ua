@@ -1,0 +1,42 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, .wrapper, #mapid, main {
+    height: 100%;
+}
+#mapid{
+    z-index: 1;
+    flex-direction: column
+}
+
+
+.body-container{
+    display: flex;
+    height: 100%;
+    flex-direction:column;
+}
+
+
+
+#map-wrapper{
+    height: 100%;
+    z-index: 1;
+}
+
+.latest-photos{
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    height: 100px;
+    overflow: scroll;
+}
+
+#filterApp {
+    padding: 5px;
+}
+
+#modal-img{
+    width: 100%;
+}

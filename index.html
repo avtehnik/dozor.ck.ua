@@ -57,33 +57,31 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
-        var updateTimeout;
+
         var mapObjects = [];
         function addPoint(location) {
             var parkPlace = L.marker(location, {icon: greenIcon}).addTo(mymap);
         }
+
         var popup = L.popup();
 
         function updateView() {
-            clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(function() {
-                jQuery.getJSON("https://city.dozor.tech/cherkasy/devices.json", function(data) {
-                    mapObjects.forEach(function(object) {
-                        mymap.removeLayer(object);
-                    });
-                    data.forEach(function(viecle) {
-                        var marker = L.marker([viecle.latitude, viecle.longitude]).addTo(mymap);
-                        mapObjects.push(marker);
-                        marker.on('click', function(e) {
-                            console.log(viecle);
-                            popup
-                                .setLatLng(e.latlng)
-                                .setContent(JSON.stringify(viecle))
-                                .openOn(mymap);
-                        });
+            jQuery.getJSON("https://city.dozor.tech/cherkasy/devices.json", function(data) {
+                mapObjects.forEach(function(object) {
+                    mymap.removeLayer(object);
+                });
+                data.forEach(function(viecle) {
+                    var marker = L.marker([viecle.latitude, viecle.longitude]).addTo(mymap);
+                    mapObjects.push(marker);
+                    marker.on('click', function(e) {
+                        console.log(viecle);
+                        popup
+                            .setLatLng(e.latlng)
+                            .setContent(JSON.stringify(viecle))
+                            .openOn(mymap);
                     });
                 });
-            }, 250);
+            });
         }
 
         mymap.getBounds();
@@ -91,7 +89,7 @@
         // mymap.on('moveend', updateView);
         // mymap.on('zoomend', updateView);
 
-        setInterval(updateView, 10000);
+        setInterval(updateView, 5000);
         updateView()
     });
 </script>
